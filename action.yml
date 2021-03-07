@@ -1,0 +1,13 @@
+name: 'Rust release version'
+description: "Check the version in a Rust project's Cargo.toml file against a release tag."
+inputs:
+  release-tag:
+    description: 'The release tag to check against the crate version.'
+    required: true
+  cargo-toml-path:
+    description: 'The path to the Cargo.toml to read, default is Cargo.toml in the current directory.'
+    required: false
+    default: 'Cargo.toml'
+runs:
+  using: node12
+  main: index.js
