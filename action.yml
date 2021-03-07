@@ -8,6 +8,18 @@ inputs:
     description: 'The path to the Cargo.toml to read, default is Cargo.toml in the current directory.'
     required: false
     default: 'Cargo.toml'
+  check-mode:
+    description: 'Controls how carefully the release tag is vetted'
+    required: false
+    default: 'simple'
+  prefix:
+    description: 'Regex for allowed string before the crate version in strict checking mode'
+    required: false
+    default: '^'
+  suffix:
+    description: 'Regex for allowed string after the crate version in strict checking mode'
+    required: false
+    default: '$'
 runs:
   using: node12
   main: index.js
