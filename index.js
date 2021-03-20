@@ -7,7 +7,7 @@ try {
     // Might make more sense to get the release tag directly from the github
     // API (if possible) than to have it as an input.
 //    const release_tag = core.getInput('release-tag');
-    const release_tag = JSON.stringify(github.context.payload, undefined, 2);
+    const release_tag = github.context.payload.ref.replace(/^refs\/heads\//, '');
     console.log(`release tag is ${release_tag}`);
     const cargo_toml_path = core.getInput('cargo-toml-path');
     
@@ -18,9 +18,9 @@ try {
     const result = check_tag(release_tag, crate_version);
         
     if (result) {
-        console.log('Release tag is consistent with the crate version!');
+        console.log(`Release tag (${release_tag}) is consistent with the crate version (${crate_version})!`);
     }else{
-        const msg = 'Release tag is NOT consistent with the crate version :('
+        const msg = `Release tag (${release_tag}) is NOT consistent with the crate version (${crate_version}).`
         console.log(msg);
         core.setFailed(msg);
     }
