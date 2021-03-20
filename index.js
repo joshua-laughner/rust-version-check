@@ -6,10 +6,19 @@ const fs = require('fs');
 try {
     // Might make more sense to get the release tag directly from the github
     // API (if possible) than to have it as an input.
-//    const release_tag = core.getInput('release-tag');
-//    const release_tag = github.context.payload.ref.replace(/^refs\/heads\//, '');
-    const release_tag = github.context.payload.release.tag_name;
+    var release_tag = core.getInput('release-tag');
+    if (release_tag == null) {
+        console.log('Release tag was not specified as an input. Trying to fetch from the event payload...');
+        release_tag = github.context.payload.release.tag_name;
+    }else{
+        console.log('Release tag was specified as an input');
+    }
+
     console.log(`release tag is ${release_tag}`);
+    if (release_tag == null) {
+        throw 'Unable to get release tag from either input or event payload.';
+    }
+
     const cargo_toml_path = core.getInput('cargo-toml-path');
     
     const data = fs.readFileSync(cargo_toml_path, 'utf-8');
