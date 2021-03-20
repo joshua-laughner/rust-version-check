@@ -7,7 +7,8 @@ try {
     // Might make more sense to get the release tag directly from the github
     // API (if possible) than to have it as an input.
 //    const release_tag = core.getInput('release-tag');
-    const release_tag = github.context.payload.ref.replace(/^refs\/heads\//, '');
+//    const release_tag = github.context.payload.ref.replace(/^refs\/heads\//, '');
+    const release_tag = github.context.payload.release.tag_name;
     console.log(`release tag is ${release_tag}`);
     const cargo_toml_path = core.getInput('cargo-toml-path');
     
