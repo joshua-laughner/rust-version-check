@@ -14,7 +14,7 @@ try {
     // Might make more sense to get the release tag directly from the github
     // API (if possible) than to have it as an input.
     var release_tag = core.getInput('release-tag');
-    if (release_tag == null) {
+    if (release_tag == null || release_tag.length == 0) {
         console.log('Release tag was not specified as an input. Trying to fetch from the event payload...');
         release_tag = github.context.payload.release.tag_name;
     }else{
